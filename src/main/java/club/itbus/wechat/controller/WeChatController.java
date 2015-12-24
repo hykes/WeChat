@@ -59,13 +59,4 @@ public class WeChatController {
         return respMessage;
     }
 
-//    public static void main(String[] args){
-//
-//        if(SignUtil.checkSignature("3907c1cc76ea3cfc3ce7c7b4101ae8a06c835e98", "1450858387", "1919568873")){
-//           log.debug("A");
-//        }else {
-//            log.debug("B");
-//        }
-//    }
-
 }
