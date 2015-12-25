@@ -20,11 +20,15 @@ public class SimpleController {
     @Value("${appName}")
     private String appName;
 
+    @Value("${description}")
+    private String description;
+
     @RequestMapping(method = RequestMethod.GET)
     public Map<String,Object> index(HttpServletRequest request, HttpServletResponse response) {
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("message","你好");
         map.put("appName", appName);
+        map.put("description", description);
         return map;
     }
 
