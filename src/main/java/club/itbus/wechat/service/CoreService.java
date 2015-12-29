@@ -43,7 +43,7 @@ public class CoreService {
 
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) { // 文本消息
 
-                return MessageResponse.getTextMessage(fromUserName, toUserName, "你发来的是文本");
+                return MessageResponse.getTextMessage(fromUserName, toUserName, "hello!"+requestMap.get("Content"));
             } else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) { // 图片消息
 
                 return MessageResponse.getTextMessage(fromUserName, toUserName, "你发来的是图片");
