@@ -10,14 +10,22 @@ public class Constants {
 	 * APPID
 	 */
 	public static String APPID = "wxe6915cbc0aa9ea1f";
+
 	/**
 	 * SECRET
 	 */
 	public static String SECRET = "63cc94d0b6ebc33ed02ec29c0b030b14";
+
+	/**
+	 * 微信access键
+	 */
+	public static String ACCESS_TOKEN_KEY = "WECHAT_ACCESS_TOKEN_KEY";
+
 	/**
 	 * 获取ACCESS_TOKEN接口
 	 */
-	public static String GET_ACCESSTOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+	public static String GET_ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential";
+
 	/**
 	 * ACCESS_TOKEN有效时间(单位：ms)
 	 */

@@ -2,6 +2,7 @@ package club.itbus.wechat.controller;
 
 import club.itbus.wechat.service.CoreService;
 import club.itbus.wechat.util.SignUtil;
+import club.itbus.wechat.util.WechatUtil;
 import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -57,6 +58,13 @@ public class WeChatController {
         // 响应消息
         // 调用response.getWriter().write()方法将消息的处理结果返回给用户
         return respMessage;
+    }
+
+    @RequestMapping(value="/access",method = RequestMethod.GET)
+    @ResponseBody
+    public String getAccess(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        WechatUtil wechatUtil= new WechatUtil();
+        return wechatUtil.getAccessToken();
     }
 
 }
