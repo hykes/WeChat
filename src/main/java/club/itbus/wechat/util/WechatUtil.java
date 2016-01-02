@@ -25,8 +25,7 @@ public class WechatUtil {
     private String WELCOME_MESSAGE_TEMPLATE = "{ \"touser\": \"%1$s\",\"msgtype\": \"news\", \"news\": { \"articles\":[ { \"title\": \"欢迎" +
             "关注XXX~点击查看XXX介绍！\", \"description\": \"欢迎关注XXX~点击查看XXX介绍！\", \"url\": \"http: //www.baidu.com\",\"picurl\": \"http: //www.baidu.com/icon.png\"}]}}";
 
-    // 短网址模版
-    private String SHORT_URL_TEMPLATE = "{\"action\":\"long2short\",\"long_url\":\"%1$s\"}";
+
 
     // 获取 OpenID api
     private final String getOpenIdUrl = "https://api.weixin.qq.com/sns/oauth2/access_token";
@@ -37,8 +36,7 @@ public class WechatUtil {
     // 获取 用户详细信息 api
     private final String getFullUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo?lang=zh_CN";
 
-    // 获取 短网址 api
-    private final String shortenUrl = "https://api.weixin.qq.com/cgi-bin/shorturl";
+
 
     // 发送客服消息给用户
     private final String sendMessage = "https://api.weixin.qq.com/cgi-bin/message/custom/send";
@@ -181,7 +179,7 @@ public class WechatUtil {
         requestUrl.append("&appid=").append(Constants.APPID)
                 .append("&secret=").append(Constants.SECRET);
         Map<String, Object> mapResp = doGet(requestUrl.toString(), Boolean.FALSE);
-        if (mapResp.get("errcode") != null && !"0".equals(mapResp.get("errcode").toString())){
+        if (isError(mapResp)){
             log.error("failed to get wx access token, cause: {}", mapResp);
         } else {
             String token = String.valueOf(mapResp.get("access_token"));
@@ -205,8 +203,12 @@ public class WechatUtil {
 
     }
 
-    public Boolean isSucusses(Map<String, Object> result) {
-        return result.containsKey("errcode") && "0".equals(result.get("errcode").toString());
+    public String getServerIp(){
+        return doGet(Constants.GET_SERVER_IP_URL, true).toString();
+    }
+
+    public Boolean isError(Map<String, Object> result) {
+        return result.get("errcode") != null && !"0".equals(result.get("errcode").toString());
     }
 
     /**
@@ -258,8 +260,8 @@ public class WechatUtil {
      *
      * @param longUrl 传入的长链接
      */
-    public Map<String, Object> shortenURL(String longUrl) {
-        return post(shortenUrl, String.format(SHORT_URL_TEMPLATE, longUrl), Boolean.TRUE);
+    public Map<String, Object> shortURL(String longUrl) {
+        return post(Constants.GET_SHORT_URL, String.format(Constants.SHORT_URL_TEMPLATE, longUrl), Boolean.TRUE);
     }
 
     /**

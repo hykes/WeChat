@@ -1,5 +1,6 @@
 package club.itbus.wechat.controller;
 
+import club.itbus.wechat.constants.Constants;
 import club.itbus.wechat.service.CoreService;
 import club.itbus.wechat.util.SignUtil;
 import club.itbus.wechat.util.WechatUtil;
@@ -62,9 +63,69 @@ public class WeChatController {
 
     @RequestMapping(value="/access",method = RequestMethod.GET)
     @ResponseBody
-    public String getAccess(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String getAccess(HttpServletRequest request, HttpServletResponse response) {
         WechatUtil wechatUtil= new WechatUtil();
         return wechatUtil.getAccessToken();
+    }
+
+    @RequestMapping(value="/ip",method = RequestMethod.GET)
+    @ResponseBody
+    public String getIp(HttpServletRequest request, HttpServletResponse response) {
+        WechatUtil wechatUtil= new WechatUtil();
+        return wechatUtil.getServerIp();
+    }
+
+    @RequestMapping(value="/create-menu",method = RequestMethod.GET)
+    @ResponseBody
+    public String createMenu(HttpServletRequest request, HttpServletResponse response) {
+        WechatUtil wechatUtil= new WechatUtil();
+        String json = "{\n" +
+                "     \"button\":[\n" +
+                "     {\t\n" +
+                "          \"type\":\"click\",\n" +
+                "          \"name\":\"今日歌曲\",\n" +
+                "          \"key\":\"V1001_TODAY_MUSIC\"\n" +
+                "      },\n" +
+                "      {\n" +
+                "           \"name\":\"菜单\",\n" +
+                "           \"sub_button\":[\n" +
+                "           {\t\n" +
+                "               \"type\":\"view\",\n" +
+                "               \"name\":\"搜索\",\n" +
+                "               \"url\":\"http://www.soso.com/\"\n" +
+                "            },\n" +
+                "            {\n" +
+                "               \"type\":\"view\",\n" +
+                "               \"name\":\"视频\",\n" +
+                "               \"url\":\"http://v.qq.com/\"\n" +
+                "            }\n" +
+                "       }]\n" +
+                " }";
+        return wechatUtil.post(Constants.CREATE_MENU_URL, json, true).toString();
+    }
+
+    @RequestMapping(value="/create-ticket",method = RequestMethod.GET)
+    @ResponseBody
+    public String getTicket(HttpServletRequest request, HttpServletResponse response) {
+        WechatUtil wechatUtil= new WechatUtil();
+        String json= "{\"expire_seconds\": 604800, \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": 123}}}";
+        return wechatUtil.post(Constants.CREATE_QRCODE_URL, json, true).toString();
+    }
+
+    @RequestMapping(value="/qrcode",method = RequestMethod.GET)
+    @ResponseBody
+    public String getQRcode(HttpServletRequest request, HttpServletResponse response) {
+        WechatUtil wechatUtil= new WechatUtil();
+        String ticket=request.getParameter("abc");
+        return wechatUtil.get(Constants.CREATE_QRCODE_URL+ticket).toString();
+    }
+
+    @RequestMapping(value="/short2long",method = RequestMethod.GET)
+    @ResponseBody
+    public String getShowUrl(HttpServletRequest request, HttpServletResponse response) {
+        WechatUtil wechatUtil= new WechatUtil();
+        String url=request.getParameter("url");
+        return wechatUtil.shortURL(url).toString();
     }
 
 }
