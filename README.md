@@ -1,2 +1,2 @@
 # WeChat
-基于Spring Boot 搭建的微信服务
+基于 Spring Boot 框架搭建的微信服务
